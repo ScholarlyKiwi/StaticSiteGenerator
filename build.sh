@@ -1,1 +1,1 @@
-python3 src/main.py "ScholarlyKiwi/"
+python3 src/main.py "/StaticSiteGenerator/"
