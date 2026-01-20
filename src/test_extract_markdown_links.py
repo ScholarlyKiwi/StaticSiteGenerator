@@ -24,7 +24,17 @@ class TestLeafNode(unittest.TestCase):
         self.assertEqual(results, expected)
 
     def test_extract_markdown_links_no_alt(self):
-        text = "[](https://i.imgur.com/aKaOqIh.gif)![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+        text = "[](https://i.imgur.com/aKaOqIh.gif) [obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
         expected = [("", "https://i.imgur.com/aKaOqIh.gif"), ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")]
+        results = extract_markdown_links(text)
+        self.assertEqual(results, expected)
+
+    def test_extract_markdown_links_glorfindel(self):
+        text = """# Why Glorfindel is More Impressive than Legolas
+
+[< Back Home](/)
+
+![Glorfindel image](/images/glorfindel.png)"""
+        expected = [("< Back Home", "/")]
         results = extract_markdown_links(text)
         self.assertEqual(results, expected)

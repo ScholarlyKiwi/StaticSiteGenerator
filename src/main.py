@@ -5,12 +5,21 @@ from page_functions import generate_pages_recursive
 import os
 import logging
 import shutil
+import sys
 
 log_debug = False
 
 def main():
-    copy_directory("./static", "./public")
-    generate_pages_recursive("content", "template.html", "public")
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
+    else:
+        basepath = "/"        
+    if not basepath.endswith("/"):
+        basepath = basepath + "/"
+    if not basepath.startswith("/"):
+        basepath = "/" + basepath
+    copy_directory("static", "public")
+    generate_pages_recursive("content", "template.html", "public", basepath)
 
 def copy_directory(source, destination):
     if log_debug:

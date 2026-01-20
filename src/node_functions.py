@@ -49,28 +49,14 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     return new_nodes
 
 def extract_markdown_images(text):
-    image_tuples = []
-    regex = r"!\[[\w\d\s]*\]\([\w\d:/.]*\)"
-    matches = re.findall(regex, text)
-    if len(matches) == 0:
-        return image_tuples
-    for match in matches:
-        alt_text = re.findall(r"\[[\w\d\s]*\]", match)[0][1:-1]
-        url = re.findall(r"\([\w\d:/.]*\)", match)[0][1:-1]
-        image_tuples.append((alt_text, url))
-    return image_tuples
+    pattern = r"!\[([^\[\]]*)\]\(([^\(\)]*)\)"
+    matches = re.findall(pattern, text)
+    return matches
 
 def extract_markdown_links(text):
-    link_tuples = []
-    regex = r"\[[\w\d\s]*\]\([\w\d:/.]*\)"
+    regex = r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)"
     matches = re.findall(regex, text)
-    if len(matches) == 0:
-        return link_tuples
-    for match in matches:
-        alt_text = re.findall(r"\[[\w\d\s]*\]", match)[0][1:-1]
-        url = re.findall(r"\([\w\d:/.]*\)", match)[0][1:-1]
-        link_tuples.append((alt_text, url))
-    return link_tuples
+    return matches
 
 def split_nodes_image(old_nodes):
     new_nodes = list()

@@ -71,5 +71,5 @@ the **same** even with inline stuff
         html = node.to_html()
         self.assertEqual(
             html,
-            "<div><blockquote><p>This is the first line of a quote This is the second line of a quote, but it may not be This is the end of the quote</p></blockquote></div>"
+            "<div><blockquote>This is the first line of a quote This is the second line of a quote, but it may not be This is the end of the quote</blockquote></div>"
         )
