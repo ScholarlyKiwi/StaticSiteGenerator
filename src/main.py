@@ -18,8 +18,8 @@ def main():
         basepath = basepath + "/"
     if not basepath.startswith("/"):
         basepath = "/" + basepath
-    copy_directory("static", "public")
-    generate_pages_recursive("content", "template.html", "public", basepath)
+    copy_directory("static", "docs")
+    generate_pages_recursive("content", "template.html", "docs", basepath)
 
 def copy_directory(source, destination):
     if log_debug:
@@ -38,16 +38,14 @@ def copy_directory(source, destination):
     if not os.path.exists(source):
         logger.error(f"Source directory '{source}' does not exist.")
         return
-    if not os.path.exists(destination):
-        logger.error(f"Desitnation directory '{destination}' does not exist.")
-        return
     if '..' in source:
         logger.error(f"Source directory invalid: '{source}'")
     if '..' in destination:
         logger.error(f"Destination directory invalid: '{source}'")
     
-    logger.debug(f'Removing path - {destination}')
-    shutil.rmtree(destination)
+    if os.path.exists(destination):
+        logger.debug(f'Removing path - {destination}')
+        shutil.rmtree(destination)
     logger.debug(f'Creating path - {destination}')
     os.mkdir(destination)
 
