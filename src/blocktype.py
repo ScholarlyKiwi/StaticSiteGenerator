@@ -20,8 +20,9 @@ def block_to_block_type(markdown_block):
         quote_block = True
         unordered_list = True
         ordered_list = True
+
         for line in markdown_lines:
-            if not re.match(r"\> ", line):
+            if not line.startswith(r">"):
                 quote_block = False
             if not re.match(r"- ", line):
                 unordered_list = False

@@ -22,7 +22,7 @@ def text_node_to_html_node(text_node):
         case TextType.LINK:
             return LeafNode("a", text_node.text, {"href": text_node.url})
         case TextType.IMAGE:
-            return LeafNode("img", None, {"src": text_node.url, "alt": text_node.text})
+            return LeafNode("img", "", {"src": text_node.url, "alt": text_node.text})
         
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = list()
@@ -172,12 +172,11 @@ def paragraph_block_to_html_node(blocktext):
 
 def heading_block_to_html_node(blocktext):
     heading_level = len(blocktext) - len(blocktext.lstrip('#'))
-    return ParentNode(f"h{heading_level}", text_to_children(blocktext.blocktext.lstrip('#').lstrip()))
+    return ParentNode(f"h{heading_level}", text_to_children(blocktext.lstrip('#').lstrip()))
 
 def quote_block_to_html_node(blocktext):
     text = blocktext.replace("> ", "").replace("\n", " ")
-    node = paragraph_block_to_html_node(text)
-    return ParentNode("blockquote", [node])
+    return LeafNode("blockquote", text)
 
 def unordered_list_block_to_html_node(blocktext):
     children = []
